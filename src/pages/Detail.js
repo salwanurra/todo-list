@@ -263,7 +263,7 @@ export default function Detail() {
                         {/* BUTTON SORT TO DO ITEM */}
                         <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
                             <Space>
-                                <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
+                                <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
                             </Space>
                         </Dropdown>
                         {/* BUTTON CREATE TO DO ITEM */}
@@ -410,6 +410,7 @@ export default function Detail() {
                                 <Select 
                                     data-cy="modal-add-priority-item" 
                                     name="priority" 
+                                    className="select-priority"
                                     options={options}
                                     onChange={(e) => setPriority(e.value)} 
                                     defaultValue={options[0]}

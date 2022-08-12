@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-dropdown" className="priority-dropdown"></div>;
     };
     return (
         <div>

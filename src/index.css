@@ -284,7 +284,15 @@ a {
   font-size: 18px !important;
 }
 
-.addpriority {
+.priority-dropdown {
   width: 5px;
   height: 5px;
+    width: 24px;
+    height: 24px;
+    background-image: url("../public/todo-item-priority-indicator-verylow.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
 }

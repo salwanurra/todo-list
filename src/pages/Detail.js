@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown" className="priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-item" className="priority-dropdown"></div>;
     };
     const formatOptionLabel = ({ value, label }) => (
         <div
@@ -423,9 +423,9 @@ export default function Detail() {
                                     onChange={e => setTitle(e.target.value)}
                                 />
                             <label data-cy="modal-add-priority-title">PRIORITY</label>
-                            <div data-cy="modal-add-priority-item">
+                            <div data-cy="modal-add-priority-dropdown">
                                 <Select 
-                                    data-cy="modal-add-priority-item" 
+                                    data-cy="modal-add-priority-dropdown" 
                                     name="priority" 
                                     className="select-priority"
                                     options={options}

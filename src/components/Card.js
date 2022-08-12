@@ -44,8 +44,8 @@ export default function CardActivity() {
             <div className="row">
                 { getActivityResult.length < 1? (
                     getActivityResult && 
-                    <div className="activity-empty">
-                        <img src="/activity-empty-state" alt="empty" />
+                    <div className="activity-empty" data-cy="activity-empty-state">
+                        <img src="/activity-empty-state.svg" alt="empty" />
                     </div>
                 ): (
                     getActivityResult && getActivityResult.map((item) => (

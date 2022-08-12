@@ -317,8 +317,8 @@ export default function Detail() {
                                             data-cy="form-edit-todo-item"
                                             // form={form}           
                                         >
-                                            <label data-cy="modal-edit-name-title">NAMA LIST ITEM</label>
-                                            <div data-cy="modal-edit-name-input">
+                                            <label>NAMA LIST ITEM</label>
+                                            <div>
                                                 <Form.Control
                                                     placeholder="Tambahkan nama Activity"
                                                     name="title"
@@ -328,9 +328,9 @@ export default function Detail() {
                                                 />
 
                                             </div>
-                                            <label data-cy="modal-add-priority-title">PRIORITY</label>
+                                            <label>PRIORITY</label>
                                             <Select 
-                                                data-cy="modal-add-priority-dropdown" 
+                                                // data-cy="modal-add-priority-dropdown" 
                                                 name="priority" 
                                                 options={options}
                                                 onChange={(e) => setPriorityEdit(e.value)} 

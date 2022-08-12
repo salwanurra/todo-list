@@ -208,7 +208,7 @@ export default function Detail() {
             <Header />
             <div className="todo-item container">
                 <div className="todo-header" data-cy="todo-header">
-                    <div className="row">
+                    <div className="d-flex justify-content-between align-items-center">
                         <Link to={"/"}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="btn-back" data-cy="todo-back-button" fill="none" viewBox="0 0 24 24" stroke="black" strokeWidth={4}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -231,7 +231,7 @@ export default function Detail() {
                             </>
                         )}
                     </div>
-                    <div className="row">
+                    <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
                         <Dropdown overlay={menuSort} trigger={"click"} data-cy="todo-sort-button">
                             <Space>

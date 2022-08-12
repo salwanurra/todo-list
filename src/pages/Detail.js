@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown" className="icon-dropdown mr-2"></div>;
+        return <div data-cy="modal-add-priority-dropdown" className={`indicator ${priority}`}></div>;
     };
     return (
         <div>

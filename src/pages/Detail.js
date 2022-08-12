@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown" className={`indicator ${priority}`}></div>;
+        return <div data-cy="modal-add-priority-dropdown"></div>;
     };
     return (
         <div>
@@ -262,7 +262,7 @@ export default function Detail() {
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
                         <Dropdown overlay={menuSort} trigger={"click"} data-cy="todo-sort-button">
-                            <Space>
+                            <Space data-cy="sort-selection">
                                 <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
                             </Space>
                         </Dropdown>

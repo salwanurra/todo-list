@@ -31,12 +31,17 @@ export default function Detail() {
     // DELETE ACTIVITY
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [modalConfirm, setModalConfirm] = useState(false)
+    const [idDelete, setIdDelete] = useState()
+    const [titleDelete, setTitleDelete] = useState()
 
-    const showModalDelete = () => {
+    const showModalDelete = (idDeleteItem, titleDeleteItem) => {
+        setIdDelete(idDeleteItem)
+        setTitleDelete(titleDeleteItem)
         setIsModalDelete(true)
+        console.log(idDeleteItem)
     }
 
-    const handleOkDelete = (idDelete) => {
+    const handleOkDelete = () => {
         dispatch(deleteToDo(idDelete));
         setIsModalDelete(false)
         setModalConfirm(true)
@@ -176,19 +181,19 @@ export default function Detail() {
     }, [getDetailResult])
 
     const sortToDo = ({key}) => {
-        if (`${key}` === '0') {
+        if (`${key}` === '1') {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
-        } else if (`${key}` === '1') {
-            let sortItem = _.sortBy(getDetailResult.todo_items, 'id');
-            setItemToDo(sortItem)
         } else if (`${key}` === '2') {
-            let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
+            let sortItem = getDetailResult.todo_items.sort((a, b) => a.id - b.id)
             setItemToDo(sortItem)
         } else if (`${key}` === '3') {
-            let sortItem = _.orderBy(getDetailResult.todo_items, 'title',['desc']);
+            let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
             setItemToDo(sortItem)
         } else if (`${key}` === '4') {
+            let sortItem = _.orderBy(getDetailResult.todo_items, 'title',['desc']);
+            setItemToDo(sortItem)
+        } else if (`${key}` === '5') {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'is_active', ['desc']);
             setItemToDo(sortItem)
         } else {
@@ -198,31 +203,31 @@ export default function Detail() {
     }
 
     const menuSort = (
-        <Menu selectable defaultSelectedKeys={'0'} onClick={sortToDo}  data-cy="sort-selection"
+        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo}  data-cy="sort-selection"
             items={[
                 {
-                    key: '0',
+                    key: '1',
                     label: 'Terbaru',
                     icon: <img src="/sort-latest.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
-                    key: '1',
+                    key: '2',
                     label: 'Terlama',
                     icon: <img src="/sort-oldest.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
-                    key: '2',
+                    key: '3',
                     label: 'A-Z',
                     icon: <img src="/sort-az.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
-                    key: '3',
+                    key: '4',
                     label: 'Z-A',
                     icon: <img src="/sort-za.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
-                    key: '4',
-                    label: 'Belum Selesai',
+                    key: '5',
+                    label:'Belum Selesai',
                     icon: <img src="/sort-unfinished.svg" alt="latest" data-cy="sort-selection" />
                 },
             ]} 
@@ -236,6 +241,7 @@ export default function Detail() {
           data-cy="modal-add-priority-item"
           className="d-flex align-items-center"
         >
+        <div className={`indicator ${value}`}></div>
           <div>{label}</div>
         </div>
       );
@@ -316,7 +322,7 @@ export default function Detail() {
                                     <div>
                                         <Button
                                             data-cy="todo-item-delete-button"
-                                            onClick={showModalDelete}
+                                            onClick={() => showModalDelete(item.id, item.title)}
                                             icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
                                         />
                                     </div>
@@ -376,7 +382,7 @@ export default function Detail() {
                                         <Modal.Header>
                                             <Modal.Title>
                                                 <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
-                                                <p data-cy="modal-delete-title">Apakah anda yakin menghapus item <b>“{item.title}”?</b></p>
+                                                <p data-cy="modal-delete-title">Apakah anda yakin menghapus item <b>“{titleDelete}”?</b></p>
                                             </Modal.Title>
                                         </Modal.Header>
                                         <Modal.Footer>

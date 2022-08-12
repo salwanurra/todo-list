@@ -250,9 +250,9 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="todo-sort-button">
-                            <Space>
-                                <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
+                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
+                            <Space data-cy="sort-selection">
+                                <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
                             </Space>
                         </Dropdown>
                         {/* BUTTON CREATE TO DO ITEM */}
@@ -273,9 +273,11 @@ export default function Detail() {
                                     <div className="checked btn-update">
                                         <div className={`indicator ${item.priority}`} data-cy="todo-item-priority-indicator"></div>
                                         {/* BUTTON CHECKED TO DO */}
-                                        <Checkbox data-cy="todo-item-checkbox" onChange={() => checkedActive(item.id)} checked={item.is_active===0} className={`${item.is_active===0 && "todo-checked"}`}>
-                                            <h5 data-cy="todo-item-title">{item.title}</h5>
-                                        </Checkbox>
+                                        <div data-cy="todo-item-checkbox">
+                                            <Checkbox data-cy="todo-item-checkbox" onChange={() => checkedActive(item.id)} checked={item.is_active===0} className={`${item.is_active===0 && "todo-checked"}`}>
+                                                <h5 data-cy="todo-item-title">{item.title}</h5>
+                                            </Checkbox>
+                                        </div>
 
                                         {/* BUTTON MODAL UPDATE EDIT TO DO ITEM */}
                                         <Button
@@ -288,46 +290,53 @@ export default function Detail() {
                                     </div>
 
                                     {/* BUTTON MODAL DELETE TO DO ITEM */}
-                                    <Button
-                                        data-cy="todo-item-delete-button"
-                                        onClick={showModalDelete}
-                                        icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
-                                    />
+                                    <div data-cy="todo-item-delete-button">
+                                        <Button
+                                            data-cy="todo-item-delete-button"
+                                            onClick={showModalDelete}
+                                            icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* MODAL CREATE NEW TO DO ITEM */}
-                                <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancel} centered>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Tambah List Item</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form.Group data-cy="form-add-todo-item">
-                                            <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
-                                            <div data-cy="modal-add-name-input">
-                                                <Form.Control
-                                                    placeholder="Tambahkan nama Activity"
-                                                    name="title"
-                                                    style={{ marginBottom: "16px" }}
-                                                    onChange={e => setTitle(e.target.value)}
-                                                />
+                                <div data-cy="modal-add">
+                                    <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancel} centered>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Tambah List Item</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form.Group data-cy="form-add-todo-item">
+                                                <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
+                                                <div data-cy="modal-add-name-input">
+                                                    <Form.Control
+                                                        data-cy="modal-add-name-input"
+                                                        placeholder="Tambahkan nama Activity"
+                                                        name="title"
+                                                        style={{ marginBottom: "16px" }}
+                                                        onChange={e => setTitle(e.target.value)}
+                                                    />
 
+                                                </div>
+                                                <label data-cy="modal-add-priority-title">PRIORITY</label>
+                                                <div data-cy="modal-add-priority-dropdown" >
+                                                    <Select 
+                                                        data-cy="modal-add-priority-dropdown" 
+                                                        name="priority" 
+                                                        options={options}
+                                                        onChange={(e) => setPriority(e.value)} 
+                                                        defaultValue={options[0]}
+                                                    />
+                                                </div>
+                                            </Form.Group>
+                                        </Modal.Body>
+                                        <Modal.Footer data-cy="modal-add-save-button">
+                                            <div className="btn-right" data-cy="modal-add-save-button">
+                                                <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOk(item.id)}>Simpan</button>
                                             </div>
-                                            <label data-cy="modal-add-priority-title">PRIORITY</label>
-                                            <Select 
-                                                data-cy="modal-add-priority-dropdown" 
-                                                name="priority" 
-                                                options={options}
-                                                onChange={(e) => setPriority(e.value)} 
-                                                defaultValue={options[0]}
-                                            />
-                                        </Form.Group>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <div className="btn-right" data-cy="modal-add-save-button">
-                                            <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOk(item.id)}>Simpan</button>
-                                        </div>
-                                    </Modal.Footer>
-                                </Modal>
+                                        </Modal.Footer>
+                                    </Modal>
+                                </div>
 
                                 {/* MODAL UPDATE EDIT TO DO ITEM */}
                                 <Modal data-cy="modal-edit-todo-item" show={isModalUpdate} onHide={() => handleCancelEdit(item)} centered>
@@ -384,7 +393,9 @@ export default function Detail() {
                                         </Modal.Header>
                                         <Modal.Footer>
                                             <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
-                                            <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
+                                            <div data-cy="modal-delete-confirm-button">
+                                                <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
+                                            </div>
                                         </Modal.Footer>
                                     </Modal>
                                 </div>

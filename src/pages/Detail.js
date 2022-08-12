@@ -56,19 +56,20 @@ export default function Detail() {
     const [priority, setPriority] = useState('very-high')
     const [is_active, setActive] = useState(true)
 
-    const showModal = () => {
+    const showModalCreate = () => {
         setIsModalCreate(true);
     };
 
-    const handleOk = (idItem) => {
+    const handleOkCreate = (idItem) => {
         dispatch(createToDo(title, priority, is_active, id, idItem))
         setIsModalCreate(false);
         window.location.reload()
     };
 
-    const handleCancel = () => {
+    const handleCancelCreate = () => {
         setIsModalCreate(false);
     };
+
     const options = [
         {
           value: "very-high",
@@ -263,7 +264,7 @@ export default function Detail() {
                             </Space>
                         </Dropdown>
                         {/* BUTTON CREATE TO DO ITEM */}
-                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModal} icon={<PlusOutlined />} data-cy="modal-add">
+                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModalCreate} icon={<PlusOutlined />} data-cy="modal-add">
                             Tambah
                         </Button>
                     </div>
@@ -307,43 +308,7 @@ export default function Detail() {
                                 </div>
 
                                 {/* MODAL CREATE NEW TO DO ITEM */}
-                                <div data-cy="modal-add">
-                                    <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancel} centered>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Tambah List Item</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <Form.Group data-cy="form-add-todo-item">
-                                                <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
-                                                <div data-cy="modal-add-name-input">
-                                                    <Form.Control
-                                                        data-cy="modal-add-name-input"
-                                                        placeholder="Tambahkan nama Activity"
-                                                        name="title"
-                                                        style={{ marginBottom: "16px" }}
-                                                        onChange={e => setTitle(e.target.value)}
-                                                    />
-
-                                                </div>
-                                                <label data-cy="modal-add-priority-title">PRIORITY</label>
-                                                <div data-cy="modal-add-priority-dropdown" >
-                                                    <Select 
-                                                        data-cy="modal-add-priority-dropdown" 
-                                                        name="priority" 
-                                                        options={options}
-                                                        onChange={(e) => setPriority(e.value)} 
-                                                        defaultValue={options[0]}
-                                                    />
-                                                </div>
-                                            </Form.Group>
-                                        </Modal.Body>
-                                        <Modal.Footer data-cy="modal-add-save-button">
-                                            <div className="btn-right" data-cy="modal-add-save-button">
-                                                <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOk(item.id)}>Simpan</button>
-                                            </div>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
+                                
 
                                 {/* MODAL UPDATE EDIT TO DO ITEM */}
                                 <Modal data-cy="modal-edit-todo-item" show={isModalUpdate} onHide={() => handleCancelEdit(item)} centered>
@@ -426,6 +391,42 @@ export default function Detail() {
                         ))
                     )}
                 </div>
+            </div>
+            <div data-cy="modal-add">
+                <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancelCreate} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Tambah List Item</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group data-cy="form-add-todo-item">
+                            <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
+                            <div data-cy="modal-add-name-input">
+                                <Form.Control
+                                    data-cy="modal-add-name-input"
+                                    placeholder="Tambahkan nama Activity"
+                                    name="title"
+                                    style={{ marginBottom: "16px" }}
+                                    onChange={e => setTitle(e.target.value)}
+                                />
+                            </div>
+                            <label data-cy="modal-add-priority-title">PRIORITY</label>
+                            <div data-cy="modal-add-priority-dropdown" >
+                                <Select 
+                                    data-cy="modal-add-priority-dropdown" 
+                                    name="priority" 
+                                    options={options}
+                                    onChange={(e) => setPriority(e.value)} 
+                                    defaultValue={options[0]}
+                                />
+                            </div>
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer data-cy="modal-add-save-button">
+                        <div className="btn-right" data-cy="modal-add-save-button">
+                            <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOkCreate()}>Simpan</button>
+                        </div>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     )

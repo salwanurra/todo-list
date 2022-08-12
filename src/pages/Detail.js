@@ -198,7 +198,7 @@ export default function Detail() {
     }
 
     const menuSort = (
-        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo}
+        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo} data-cy="sort-selection"
             items={[
                 {
                     key: '1',
@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-dropdown" className="addpriority"></div>;
     };
     return (
         <div>
@@ -261,8 +261,8 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="todo-sort-button">
-                            <Space data-cy="sort-selection">
+                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
+                            <Space>
                                 <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
                             </Space>
                         </Dropdown>

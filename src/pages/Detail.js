@@ -176,19 +176,19 @@ export default function Detail() {
     }, [getDetailResult])
 
     const sortToDo = ({key}) => {
-        if (`${key}` === '1') {
+        if (`${key}` === '0') {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
-        } else if (`${key}` === '2') {
+        } else if (`${key}` === '1') {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'id');
             setItemToDo(sortItem)
-        } else if (`${key}` === '3') {
+        } else if (`${key}` === '2') {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
             setItemToDo(sortItem)
-        } else if (`${key}` === '4') {
+        } else if (`${key}` === '3') {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'title',['desc']);
             setItemToDo(sortItem)
-        } else if (`${key}` === '5') {
+        } else if (`${key}` === '4') {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'is_active', ['desc']);
             setItemToDo(sortItem)
         } else {
@@ -198,30 +198,30 @@ export default function Detail() {
     }
 
     const menuSort = (
-        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo}
+        <Menu selectable defaultSelectedKeys={'0'} onClick={sortToDo}  data-cy="sort-selection"
             items={[
                 {
-                    key: '1',
+                    key: '0',
                     label: 'Terbaru',
                     icon: <img src="/sort-latest.svg" alt="latest" />
                 },
                 {
-                    key: '2',
+                    key: '1',
                     label: 'Terlama',
                     icon: <img src="/sort-oldest.svg" alt="latest" />
                 },
                 {
-                    key: '3',
+                    key: '2',
                     label: 'A-Z',
                     icon: <img src="/sort-az.svg" alt="latest" />
                 },
                 {
-                    key: '4',
+                    key: '3',
                     label: 'Z-A',
                     icon: <img src="/sort-za.svg" alt="latest" />
                 },
                 {
-                    key: '5',
+                    key: '4',
                     label: 'Belum Selesai',
                     icon: <img src="/sort-unfinished.svg" alt="latest" />
                 },
@@ -236,7 +236,6 @@ export default function Detail() {
           data-cy="modal-add-priority-item"
           className="d-flex align-items-center"
         >
-          <div className={`label-indicator ${value}`}></div>
           <div>{label}</div>
         </div>
       );
@@ -271,11 +270,14 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
-                            <Space>
-                                <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
-                            </Space>
-                        </Dropdown>
+                        <div data-cy="sort-selection">
+                            <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
+                                <Space>
+                                    <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
+                                </Space>
+                            </Dropdown>
+
+                        </div>
                         {/* BUTTON CREATE TO DO ITEM */}
                         <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModalCreate} icon={<PlusOutlined />} data-cy="todo-add-button">
                             Tambah

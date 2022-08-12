@@ -407,6 +407,7 @@ export default function Detail() {
                                     onChange={e => setTitle(e.target.value)}
                                 />
                             <label data-cy="modal-add-priority-title">PRIORITY</label>
+                            <div data-cy="modal-add-priority-item" >
                                 <Select 
                                     data-cy="modal-add-priority-item" 
                                     name="priority" 
@@ -416,6 +417,8 @@ export default function Detail() {
                                     defaultValue={options[0]}
                                     components={{DropdownIndicator}}
                                 />
+
+                            </div>
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>

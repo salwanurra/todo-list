@@ -95,7 +95,7 @@ h1, h2, h3, h4, h5 {
   margin: 50px 0;
 }
 
-.modal-delete .ant-modal-body {
+.modal-delete .modal-title {
   text-align: center;
 }
 
@@ -249,7 +249,7 @@ h5 {
   display: none !important;
 }
 
-.modal-confirmation .ant-modal-body {
+.modal-confirmation .modal-title {
   display: flex;
   align-items: center;
 }

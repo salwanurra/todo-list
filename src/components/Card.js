@@ -1,9 +1,10 @@
-import { Button, Card, Col, Modal, Row } from "antd";
+import { Button, Card, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteActivity, getAllActivity } from "../store/actions/activity";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { Modal } from "react-bootstrap";
 
 export default function CardActivity() {
     const [modalDelete, setModalDelete] = useState(false)
@@ -30,6 +31,10 @@ export default function CardActivity() {
         setModalDelete(false)
     }
 
+    const handleModalConfirm = () => {
+        setModalConfirm(false)
+        window.location.reload()
+    }
     return (
         <div className="activity-card">
             <Row gutter={[24, 32]}>
@@ -59,16 +64,20 @@ export default function CardActivity() {
                             <Modal
                                 data-cy="modal-delete"
                                 className="modal-delete"
-                                visible={modalDelete}
-                                centered={true}
-                                footer={null}
+                                show={modalDelete}
+                                onHide={handleCancelDelete}
+                                centered
                             >
-                                <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
-                                <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{item.title}”?</b></p>
-                                <div className="modal-footer">
+                                <Modal.Header>
+                                    <Modal.Title>
+                                        <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
+                                        <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{item.title}”?</b></p>
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Footer>
                                     <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
                                     <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
-                                </div>
+                                </Modal.Footer>
                             </Modal>
                      </div>
                     
@@ -81,14 +90,16 @@ export default function CardActivity() {
                 <Modal
                     data-cy="modal-confirmation"
                     className="modal-confirmation"
-                    visible={modalConfirm}
-                    centered={true}
-                    onOkText="Hapus"
-                    footer={null}
-                    closable
+                    show={modalConfirm}
+                    onHide={handleModalConfirm}
+                    centered
                 >
-                    <img data-cy="modal-information-icon" src="/modal-information-icon.svg" alt="information" />
-                    <h5 data-cy="modal-information-title">Activity berhasil dihapus</h5>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            <img data-cy="modal-information-icon" src="/modal-information-icon.svg" alt="information" />
+                            <h5 data-cy="modal-information-title">Activity berhasil dihapus</h5>
+                        </Modal.Title>
+                    </Modal.Header>
                 </Modal>
             </div>
         </div>

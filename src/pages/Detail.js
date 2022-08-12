@@ -185,7 +185,7 @@ export default function Detail() {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
         } else if (`${key}` === '2') {
-            let sortItem = getDetailResult.todo_items.sort((a, b) => a.id - b.id)
+            let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
         } else if (`${key}` === '3') {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
@@ -371,9 +371,9 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="todo-item-delete-button">
+                                <div className="modal-delete" data-cy="todo-modal-delete">
                                     <Modal
-                                        data-cy="modal-delete"
+                                        data-cy="todo-modal-delete"
                                         className="modal-delete"
                                         show={isModalDelete}
                                         onHide={handleCancelDelete}

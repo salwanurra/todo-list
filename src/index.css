@@ -296,3 +296,7 @@ a {
     vertical-align: middle;
     cursor: pointer;
 }
+
+.select-priority {
+  width: 200px !important;
+}

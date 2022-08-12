@@ -61,13 +61,14 @@ export default function CardActivity() {
                                 className="modal-delete"
                                 visible={modalDelete}
                                 centered={true}
-                                footer={[
-                                    <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>,
-                                    <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>,
-                                ]}
+                                footer={null}
                             >
                                 <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
                                 <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{item.title}”?</b></p>
+                                <div className="modal-footer">
+                                    <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
+                                    <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
+                                </div>
                             </Modal>
                      </div>
                     

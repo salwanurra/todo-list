@@ -121,7 +121,7 @@ h1, h2, h3, h4, h5 {
   border-radius: 12px !important;
 }
 
-.modal-delete .ant-modal-footer {
+.modal-delete .modal-footer {
   display: flex !important;
   align-items: center;
   justify-content: center;

@@ -198,7 +198,7 @@ export default function Detail() {
     }
 
     const menuSort = (
-        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo} data-cy="sort-selection"
+        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo}
             items={[
                 {
                     key: '1',
@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown" className="addpriority"></div>;
+        return <div data-cy="modal-add-priority-dropdown"></div>;
     };
     return (
         <div>
@@ -301,7 +301,7 @@ export default function Detail() {
                                     </div>
 
                                     {/* BUTTON MODAL DELETE TO DO ITEM */}
-                                    <div data-cy="todo-item-delete-button">
+                                    <div>
                                         <Button
                                             data-cy="todo-item-delete-button"
                                             onClick={showModalDelete}

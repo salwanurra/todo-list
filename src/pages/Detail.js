@@ -28,20 +28,24 @@ export default function Detail() {
 
     // DELETE ACTIVITY
     const showModalDelete = (id, title) => {
-        confirm({
-            title: <h5>Apakah anda yakin menghapus List Item “{title}”?</h5>,
-            icon: <img src="/modal-delete-icon.svg" alt="delete" />,
-            okText: 'Hapus',
-            okType: "danger",
-            cancelText: 'Batal',
-            centered: true,
-            onOk() {
-                dispatch(deleteToDo(id));
-                window.location.reload()
-            },     
-            onCancel() {
-            },
-        });
+        <div data-cy="modal-delete-cancel-button modal-delete">
+            {confirm({
+                title: <h5>Apakah anda yakin menghapus List Item “{title}”?</h5>,
+                icon: <img src="/modal-delete-icon.svg" alt="delete" />,
+                okText: 'Hapus',
+                okType: "danger",
+                cancelText: 'Batal',
+                centered: true,
+                onOk() {
+                    dispatch(deleteToDo(id));
+                    window.location.reload()
+                },     
+                onCancel() {
+                    <div data-cy="modal-delete-cancel-button"></div>
+                },
+            })}
+
+        </div>
     }
 
     // CREATE NEW ACTIVITY

@@ -95,7 +95,7 @@ h1, h2, h3, h4, h5 {
   margin: 50px 0;
 }
 
-.ant-modal-confirm-body {
+.modal-delete .ant-modal-body {
   text-align: center;
 }
 
@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5 {
   border: none !important;
 }
 
-.ant-modal-confirm-btns .ant-btn-dangerous {
+.modal-delete .ant-btn-danger {
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -114,19 +114,20 @@ h1, h2, h3, h4, h5 {
   border-radius: 45px !important;
   width: 150px;
   height: 54px;
+  font-size: 18px;
 }
 
 .ant-modal-content {
   border-radius: 12px !important;
 }
 
-.ant-modal-confirm-btns {
+.modal-delete .ant-modal-footer {
   display: flex !important;
   align-items: center;
   justify-content: center;
 }
 
-.ant-modal-confirm-btns .ant-btn-default {
+.modal-delete .ant-btn-default {
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -137,6 +138,7 @@ h1, h2, h3, h4, h5 {
   border-radius: 45px !important;
   width: 150px;
   height: 54px;
+  font-size: 18px;
 }
 
 .todo-list, .activity-card {
@@ -247,12 +249,12 @@ h5 {
   display: none !important;
 }
 
-.success-delete .ant-modal-confirm-body {
+.modal-confirmation .ant-modal-body {
   display: flex;
   align-items: center;
 }
 
-.success-delete .ant-modal-confirm-title {
+.modal-confirmation h5 {
   margin-left: 20px;
 }
 
@@ -271,4 +273,8 @@ p {
 .btn-right {
   display: flex;
   justify-content: flex-end;
+}
+
+.modal-delete p {
+  font-size: 18px !important;
 }

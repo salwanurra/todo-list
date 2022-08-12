@@ -203,33 +203,33 @@ export default function Detail() {
                 {
                     key: '0',
                     label: 'Terbaru',
-                    icon: <img src="/sort-latest.svg" alt="latest" />
+                    icon: <img src="/sort-latest.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
                     key: '1',
                     label: 'Terlama',
-                    icon: <img src="/sort-oldest.svg" alt="latest" />
+                    icon: <img src="/sort-oldest.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
                     key: '2',
                     label: 'A-Z',
-                    icon: <img src="/sort-az.svg" alt="latest" />
+                    icon: <img src="/sort-az.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
                     key: '3',
                     label: 'Z-A',
-                    icon: <img src="/sort-za.svg" alt="latest" />
+                    icon: <img src="/sort-za.svg" alt="latest" data-cy="sort-selection" />
                 },
                 {
                     key: '4',
                     label: 'Belum Selesai',
-                    icon: <img src="/sort-unfinished.svg" alt="latest" />
+                    icon: <img src="/sort-unfinished.svg" alt="latest" data-cy="sort-selection" />
                 },
             ]} 
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-item" className="priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-dropdown" className="priority-dropdown"></div>;
     };
     const formatOptionLabel = ({ value, label }) => (
         <div
@@ -344,7 +344,7 @@ export default function Detail() {
 
                                             </div>
                                             <label>PRIORITY</label>
-                                            <div  data-cy="modal-add-priority-dropdown">
+                                            <div data-cy="modal-add-priority-dropdown">
                                                 <Select 
                                                     data-cy="modal-add-priority-dropdown" 
                                                     name="priority" 

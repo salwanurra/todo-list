@@ -258,7 +258,7 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
+                        <Dropdown overlay={menuSort} trigger={"click"} data-cy="todo-sort-button">
                             <Space data-cy="sort-selection">
                                 <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
                             </Space>
@@ -346,7 +346,7 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="modal-delete-confirm-button">
+                                <div className="modal-delete" data-cy="todo-item-delete-button">
                                     <Modal
                                         data-cy="modal-delete"
                                         className="modal-delete"
@@ -398,7 +398,6 @@ export default function Detail() {
                     <Modal.Body>
                         <Form.Group data-cy="form-add-todo-item">
                             <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
-                            <div data-cy="modal-add-name-input">
                                 <Form.Control
                                     data-cy="modal-add-name-input"
                                     placeholder="Tambahkan nama Activity"
@@ -406,21 +405,18 @@ export default function Detail() {
                                     style={{ marginBottom: "16px" }}
                                     onChange={e => setTitle(e.target.value)}
                                 />
-                            </div>
                             <label data-cy="modal-add-priority-title">PRIORITY</label>
-                            <div data-cy="modal-add-priority-dropdown" >
                                 <Select 
-                                    data-cy="modal-add-priority-dropdown" 
+                                    data-cy="modal-add-priority-item" 
                                     name="priority" 
                                     options={options}
                                     onChange={(e) => setPriority(e.value)} 
                                     defaultValue={options[0]}
                                 />
-                            </div>
                         </Form.Group>
                     </Modal.Body>
-                    <Modal.Footer data-cy="modal-add-save-button">
-                        <div className="btn-right" data-cy="modal-add-save-button">
+                    <Modal.Footer>
+                        <div className="btn-right">
                             <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOkCreate()}>Simpan</button>
                         </div>
                     </Modal.Footer>

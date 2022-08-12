@@ -201,6 +201,16 @@ export default function Detail() {
     const DropdownIndicator = () => {
         return <div data-cy="modal-add-priority-dropdown" className="priority-dropdown"></div>;
     };
+
+    const formatOptionLabel = ({ value, label }) => (
+        <div
+          data-cy="modal-add-priority-item"
+          className="d-flex align-items-center"
+        >
+          <div className={`label-indicator ${value}`}></div>
+          <div>{label}</div>
+        </div>
+    );
     return (
         <div>
             <Header />
@@ -433,6 +443,7 @@ export default function Detail() {
                                     onChange={(e) => setPriority(e.value)} 
                                     defaultValue={options[0]}
                                     components={{DropdownIndicator}}
+                                    formatOptionLabel={formatOptionLabel}
                                 />
 
                             </div>

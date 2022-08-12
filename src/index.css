@@ -300,3 +300,12 @@ a {
 .select-priority {
   width: 200px !important;
 }
+
+#custom-dropdown {
+  background: transparent !important;
+  border: none !important;
+}
+
+#custom-dropdown::after {
+  display: none !important;
+}

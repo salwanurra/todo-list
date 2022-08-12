@@ -342,14 +342,17 @@ export default function Detail() {
 
                                             </div>
                                             <label>PRIORITY</label>
-                                            <Select 
-                                                // data-cy="modal-add-priority-dropdown" 
-                                                name="priority" 
-                                                options={options}
-                                                onChange={(e) => setPriorityEdit(e.value)} 
-                                                defaultValue={selectOption}
-                                                formatOptionLabel={formatOptionLabel}
-                                            />
+                                            <div  data-cy="modal-add-priority-dropdown">
+                                                <Select 
+                                                    data-cy="modal-add-priority-dropdown" 
+                                                    name="priority" 
+                                                    options={options}
+                                                    onChange={(e) => setPriorityEdit(e.value)} 
+                                                    defaultValue={selectOption}
+                                                    formatOptionLabel={formatOptionLabel}
+                                                />
+
+                                            </div>
                                         </Form.Group>
                                     </Modal.Body>
                                     <Modal.Footer>

@@ -30,6 +30,8 @@ export default function Detail() {
 
     // DELETE ACTIVITY
     const [isModalDelete, setIsModalDelete] = useState(false);
+    const [modalConfirm, setModalConfirm] = useState(false)
+
     const showModalDelete = () => {
         setIsModalDelete(true)
     }
@@ -37,11 +39,16 @@ export default function Detail() {
     const handleOkDelete = (idDelete) => {
         dispatch(deleteToDo(idDelete));
         setIsModalDelete(false)
-        window.location.reload()
+        setModalConfirm(true)
     }
 
     const handleCancelDelete = () => {
         setIsModalDelete(false)
+    }
+
+    const handleModalConfirm = () => {
+        setModalConfirm(false)
+        window.location.reload()
     }
 
     // CREATE NEW ACTIVITY
@@ -256,7 +263,7 @@ export default function Detail() {
                             </Space>
                         </Dropdown>
                         {/* BUTTON CREATE TO DO ITEM */}
-                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModal} icon={<PlusOutlined />} data-cy="todo-add-button">
+                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModal} icon={<PlusOutlined />} data-cy="modal-add">
                             Tambah
                         </Button>
                     </div>
@@ -397,6 +404,22 @@ export default function Detail() {
                                                 <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
                                             </div>
                                         </Modal.Footer>
+                                    </Modal>
+                                </div>
+                                <div data-cy="modal-information">
+                                    <Modal
+                                        data-cy="modal-information"
+                                        className="modal-confirmation"
+                                        show={modalConfirm}
+                                        onHide={handleModalConfirm}
+                                        centered
+                                    >
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>
+                                                <img data-cy="modal-information-icon" src="/modal-information-icon.svg" alt="information" />
+                                                <h5 data-cy="modal-information-title">Activity berhasil dihapus</h5>
+                                            </Modal.Title>
+                                        </Modal.Header>
                                     </Modal>
                                 </div>
                             </>

@@ -1,7 +1,9 @@
 import _ from "lodash"
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Dropdown, Form, Input, Menu, Modal, Select, Space } from "antd";
-import { useEffect, useState } from "react";
+import { ConsoleSqlOutlined, PlusOutlined } from "@ant-design/icons";
+import { Modal, Form } from "react-bootstrap";
+import Select from "react-select";
+import { Button, Checkbox, Dropdown, Input, Menu, Space } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
 import Header from "../components/Header";
@@ -9,12 +11,11 @@ import { getDetailActivity, updateActivity } from "../store/actions/activity";
 import { createToDo, deleteToDo, updateToDo } from "../store/actions/todo";
 
 export default function Detail() {
-    const { Option } = Select;
-    const [form] = Form.useForm()
+    // const { Option } = Select;
+    const inputRef = useRef()
+    // const [form] = Form.useForm()
     const [isModalCreate, setIsModalCreate] = useState(false);
-    const [isModalUpdate, setIsModalUpdate] = useState(false);;
-    const [titleEdit, setTitleEdit] = useState();
-    const [priorityEdit, setPriorityEdit] = useState();
+    const [isModalUpdate, setIsModalUpdate] = useState(false);
     const dispatch = useDispatch()
     const { confirm } = Modal;
     const { id } = useParams()
@@ -22,26 +23,25 @@ export default function Detail() {
     const [itemToDo, setItemToDo] = useState([])
 
     // DETAIL ACITIVITY
+
     useEffect(() => {
         dispatch(getDetailActivity({ id: id}));
     }, [dispatch, id]);
 
     // DELETE ACTIVITY
-    const showModalDelete = (id, title) => {
-            confirm({
-                title: <h5>Apakah anda yakin menghapus List Item “{title}”?</h5>,
-                icon: <img src="/modal-delete-icon.svg" alt="delete" />,
-                okText: 'Hapus',
-                okType: "danger",
-                cancelText: 'Batal',
-                centered: true,
-                onOk() {
-                    dispatch(deleteToDo(id));
-                    window.location.reload()
-                },     
-                onCancel() {
-                },
-            })
+    const [isModalDelete, setIsModalDelete] = useState(false);
+    const showModalDelete = () => {
+        setIsModalDelete(true)
+    }
+
+    const handleOkDelete = (idDelete) => {
+        dispatch(deleteToDo(idDelete));
+        setIsModalDelete(false)
+        window.location.reload()
+    }
+
+    const handleCancelDelete = () => {
+        setIsModalDelete(false)
     }
 
     // CREATE NEW ACTIVITY
@@ -62,6 +62,28 @@ export default function Detail() {
     const handleCancel = () => {
         setIsModalCreate(false);
     };
+    const options = [
+        {
+          value: "very-high",
+          label: "Very High",
+        },
+        {
+          value: "high",
+          label: "High",
+        },
+        {
+          value: "normal",
+          label: "Medium",
+        },
+        {
+          value: "low",
+          label: "Low",
+        },
+        {
+          value: "very-low",
+          label: "Very Low",
+        },
+    ];
 
     // UPDATE EDIT NAME ACTIVITY
     const [updateClick, setUpdateClick] = useState(false)
@@ -74,43 +96,44 @@ export default function Detail() {
     }
     const handleEditActivity = () => {
         setUpdateClick(true)
+        if(!titleActivity) {
+            setTimeout(() => {
+                inputRef.current?.focus();
+            }, 100);
+        }
     };
 
     // UPDATE EDIT TO DO ITEM
-    const showModalUpdate = (id, item) => {
+    const [idEdit, setIdEdit] = useState();
+    const [titleEdit, setTitleEdit] = useState();
+    const [priorityEdit, setPriorityEdit] = useState();
+    const [selectOption, setSelectOption] = useState();
+
+    const showModalUpdate = (item) => {
+        setIdEdit(item.id)
         setIsModalUpdate(true)
         setTitleEdit(item.title)
         setPriorityEdit(item.priority)
-        let initialValues = {
-            title: item.title,
-            priority: item.priority
-        }
-        form.setFieldsValue(initialValues)
+        setSelectOption(options.find(option => option.value===item.priority))
     };
-
-    let initialValues = {
-        title: titleEdit,
-        priority: priorityEdit
-    }
-
+    
+    console.log(idEdit)
     let data = {title: titleEdit, is_active:is_active, priority: priorityEdit}
 
     const handleOkEdit = async (id) => {
-        dispatch(updateToDo({id, data}))
+        dispatch(updateToDo({id,data}))
         setIsModalUpdate(false);
         window.location.reload()
     };
-    
-    console.log(initialValues)
+
     const handleCancelEdit = () => {
         setIsModalUpdate(false);
-        setTitleEdit('')
-        setPriorityEdit('')
-        let initialValues = {
-            title: '',
-            priority: ''
+        if(!titleEdit) {
+            // setIdEdit(null)
+            setTitleEdit('')
+            setPriorityEdit('')
+            setSelectOption(null)
         }
-        form.setFieldsValue(initialValues)
     }
 
     // UPDATE CHECKED TO DO ITEM (ACTIVE INACTIVE)
@@ -197,12 +220,6 @@ export default function Detail() {
             ]} 
         />
     )
-    const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
-
-    useEffect(() => {
-        forceUpdate({});
-    }, []);
-    console.log(title)
     return (
         <div>
             <Header />
@@ -217,7 +234,7 @@ export default function Detail() {
                         {/* UPDATE EDIT TITLE ACTIVITY */}
                         {updateClick ? (
                             <>
-                                <Input defaultValue={getDetailResult.title} onBlur={() => handleSubmitEdit(getDetailResult.id)} onChange={e => setTitleActivity(e.target.value)} data-cy="todo-title-edit-input" />
+                                <Input ref={inputRef} defaultValue={getDetailResult.title} onBlur={() => handleSubmitEdit(getDetailResult.id)} onChange={e => setTitleActivity(e.target.value)} data-cy="todo-title-edit-input" />
                                 <svg xmlns="http://www.w3.org/2000/svg" className="btn-edit-activity" data-cy="todo-title-edit-button" fill="none" viewBox="0 0 24 24" stroke="#A4A4A4" strokeWidth={2}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
@@ -263,7 +280,7 @@ export default function Detail() {
                                         {/* BUTTON MODAL UPDATE EDIT TO DO ITEM */}
                                         <Button
                                             data-cy="todo-item-edit-button"
-                                            onClick={() => showModalUpdate(item.id, item)}
+                                            onClick={() => showModalUpdate(item)}
                                             icon={<svg xmlns="http://www.w3.org/2000/svg" data-cy="todo-item-edit-button" fill="none" viewBox="0 0 24 24" stroke="#C4C4C4" strokeWidth={2}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                             </svg>} 
@@ -273,100 +290,104 @@ export default function Detail() {
                                     {/* BUTTON MODAL DELETE TO DO ITEM */}
                                     <Button
                                         data-cy="todo-item-delete-button"
-                                        onClick={() => showModalDelete(item.id, item.title)}
+                                        onClick={showModalDelete}
                                         icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
                                     />
                                 </div>
 
                                 {/* MODAL CREATE NEW TO DO ITEM */}
-                                <Modal data-cy="modal-add-todo-item" title="Tambah List Item" visible={isModalCreate} footer={null} onCancel={handleCancel}>
-                                    <Form
-                                        data-cy="form-add-todo-item"
-                                        name="basic"
-                                        layout="vertical"
-                                        autoComplete="off"
-                                        onFinish={() => handleOk(item.id)}
-                                    >
-                                        <Form.Item
-                                            data-cy="modal-add-title"
-                                            label={"NAMA LIST ITEM"}
-                                            name="title"
-                                            style={{ marginBottom: "16px" }}
-                                        >
-                                            <Input
-                                                data-cy="modal-add-name-input"
-                                                placeholder="Tambahkan nama list item"
-                                                className="input-email"
-                                                id="title"
-                                                onChange={e => setTitle(e.target.value)} />
-                                        </Form.Item>
-                                        <Form.Item
-                                            data-cy="modal-add-priority-title"
-                                            label={"Priority"}
-                                            name="priority"
-                                        >
-                                            <Select data-cy="modal-add-priority-dropdown" name="priority" onChange={(value) => setPriority(value)} defaultValue="very-high">
-                                                <Option value="very-high" name="priority">Very High</Option>
-                                                <Option value="high" name="priority">High</Option>
-                                                <Option value="normal" name="priority">Normal</Option>
-                                                <Option value="low" name="priority">Low</Option>
-                                                <Option value="very-low" name="priority">Very Low</Option>
-                                            </Select>
-                                        </Form.Item>
-                                        <div className="btn-right">
-                                            <Button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" size="large" shape="round" htmlType="submit">Simpan</Button>
+                                <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancel} centered>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Tambah List Item</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Form.Group data-cy="form-add-todo-item">
+                                            <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
+                                            <div data-cy="modal-add-name-input">
+                                                <Form.Control
+                                                    placeholder="Tambahkan nama Activity"
+                                                    name="title"
+                                                    style={{ marginBottom: "16px" }}
+                                                    onChange={e => setTitle(e.target.value)}
+                                                />
+
+                                            </div>
+                                            <label data-cy="modal-add-priority-title">PRIORITY</label>
+                                            <Select 
+                                                data-cy="modal-add-priority-dropdown" 
+                                                name="priority" 
+                                                options={options}
+                                                onChange={(e) => setPriority(e.value)} 
+                                                defaultValue={options[0]}
+                                            />
+                                        </Form.Group>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <div className="btn-right" data-cy="modal-add-save-button">
+                                            <button data-cy="modal-add-save-button" disabled={title===''} className="btn-lightblue" onClick={() => handleOk(item.id)}>Simpan</button>
                                         </div>
-                                    </Form>
+                                    </Modal.Footer>
                                 </Modal>
 
                                 {/* MODAL UPDATE EDIT TO DO ITEM */}
-                                <Modal data-cy="modal-edit-todo-item" title="Edit Item" destroyOnClose={true} visible={isModalUpdate} footer={null} onCancel={() => handleCancelEdit(item)}>                    
-                                    <Form
-                                        data-cy="form-edit-todo-item"
-                                        name="basic"
-                                        form={form}
-                                        layout="vertical"
-                                        autoComplete="off"
-                                        initialValues={initialValues}
-                                        onFinish={() => handleOkEdit(item.id)}
-                                    >
-                                        <Form.Item
-                                            data-cy="form-edit-title"
-                                            label={"NAMA LIST ITEM"}
-                                            name="title"
-                                            id="title"
-                                            // initialValue={item.title}
-                                            style={{ marginBottom: "16px" }}
+                                <Modal data-cy="modal-edit-todo-item" show={isModalUpdate} onHide={() => handleCancelEdit(item)} centered>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Tambah List Item</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Form.Group   
+                                            data-cy="form-edit-todo-item"
+                                            // form={form}           
                                         >
-                                            <Input
-                                                data-cy="form-edit-input-title"
-                                                placeholder="Tambahkan nama list item"
-                                                className="input-email"
-                                                id="title"
-                                                name="title"
-                                                // key={title}
-                                                onChange={e => setTitleEdit(e.target.value)} 
+                                            <label data-cy="modal-edit-name-title">NAMA LIST ITEM</label>
+                                            <div data-cy="modal-edit-name-input">
+                                                <Form.Control
+                                                    placeholder="Tambahkan nama Activity"
+                                                    name="title"
+                                                    style={{ marginBottom: "16px" }}
+                                                    defaultValue={titleEdit}
+                                                    onChange={(e) => setTitleEdit(e.target.value)}
+                                                />
+
+                                            </div>
+                                            <label data-cy="modal-add-priority-title">PRIORITY</label>
+                                            <Select 
+                                                data-cy="modal-add-priority-dropdown" 
+                                                name="priority" 
+                                                options={options}
+                                                onChange={(e) => setPriorityEdit(e.value)} 
+                                                defaultValue={selectOption}
                                             />
-                                        </Form.Item>
-                                        <Form.Item
-                                            data-cy="form-edit-input-priority"
-                                            label={"Priority"}
-                                            name="priority"
-                                            id="priority"
-                                        >
-                                            <Select data-cy="form-edit-dropdown-priority" id="priority" name="priority" onChange={(value) => setPriorityEdit(value)}>
-                                                <Option id="priority" name="priority" icon={<img src="/ceklis.svg" alt="" />} value="very-high">Very High</Option>
-                                                <Option id="priority" name="priority" value="high">High</Option>
-                                                <Option id="priority" name="priority" value="normal">Normal</Option>
-                                                <Option id="priority" name="priority" value="low">Low</Option>
-                                                <Option id="priority" name="priority" value="very-low">Very Low</Option>
-                                            </Select>
-                                        </Form.Item>
+                                        </Form.Group>
+                                    </Modal.Body>
+                                    <Modal.Footer>
                                         <div className="btn-right">
-                                            <Button data-cy="modal-edit-save-button" className="btn-lightblue" size="large" shape="round" htmlType="submit">Simpan</Button>
+                                            <button data-cy="modal-edit-save-button" className="btn-lightblue" onClick={() => handleOkEdit(item.id)} htmlType="submit">Simpan</button>
                                         </div>
-                                    </Form>
-                                </Modal>         
+                                    </Modal.Footer>
+                                </Modal> 
+
+                                {/* MODAL DELETE*/}
+                                <div className="modal-delete" data-cy="modal-delete-confirm-button">
+                                    <Modal
+                                        data-cy="modal-delete"
+                                        className="modal-delete"
+                                        show={isModalDelete}
+                                        onHide={handleCancelDelete}
+                                        centered
+                                    >
+                                        <Modal.Header>
+                                            <Modal.Title>
+                                                <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
+                                                <p data-cy="modal-delete-title">Apakah anda yakin menghapus item <b>“{item.title}”?</b></p>
+                                            </Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Footer>
+                                            <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
+                                            <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                </div>
                             </>
                         ))
                     )}

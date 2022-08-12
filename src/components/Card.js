@@ -68,9 +68,9 @@ export default function CardActivity() {
                     )
                 ))}
             </div>
-            <div className="modal-delete">
+            <div className="modal-delete" data-cy="modal-delete">
                 <Modal
-                    data-cy="todo-modal-delete"
+                    data-cy="modal-delete"
                     className="modal-delete"
                     show={modalDelete}
                     onHide={handleCancelDelete}
@@ -90,6 +90,7 @@ export default function CardActivity() {
             </div>
             <div data-cy="modal-information">
                 <Modal
+                    data-cy="modal-information"
                     className="modal-confirmation"
                     show={modalConfirm}
                     onHide={handleModalConfirm}

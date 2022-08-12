@@ -229,7 +229,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-dropdown" className="priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-item" className="priority-dropdown"></div>;
     };
     const formatOptionLabel = ({ value, label }) => (
         <div
@@ -270,7 +270,7 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <div data-cy="sort-selection">
+                        <div data-cy="todo-sort-button">
                             <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
                                 <Space>
                                     <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
@@ -423,7 +423,7 @@ export default function Detail() {
                                     onChange={e => setTitle(e.target.value)}
                                 />
                             <label data-cy="modal-add-priority-title">PRIORITY</label>
-                            <div>
+                            <div data-cy="modal-add-priority-item">
                                 <Select 
                                     data-cy="modal-add-priority-item" 
                                     name="priority" 

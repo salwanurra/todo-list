@@ -264,7 +264,7 @@ export default function Detail() {
                             </Space>
                         </Dropdown>
                         {/* BUTTON CREATE TO DO ITEM */}
-                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModalCreate} icon={<PlusOutlined />} data-cy="modal-add">
+                        <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModalCreate} icon={<PlusOutlined />} data-cy="todo-add-button">
                             Tambah
                         </Button>
                     </div>
@@ -306,9 +306,6 @@ export default function Detail() {
                                         />
                                     </div>
                                 </div>
-
-                                {/* MODAL CREATE NEW TO DO ITEM */}
-                                
 
                                 {/* MODAL UPDATE EDIT TO DO ITEM */}
                                 <Modal data-cy="modal-edit-todo-item" show={isModalUpdate} onHide={() => handleCancelEdit(item)} centered>
@@ -392,6 +389,7 @@ export default function Detail() {
                     )}
                 </div>
             </div>
+            {/* MODAL CREATE NEW TO DO ITEM */}
             <div data-cy="modal-add">
                 <Modal data-cy="modal-add" show={isModalCreate} onHide={handleCancelCreate} centered>
                     <Modal.Header closeButton>

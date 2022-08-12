@@ -9,7 +9,8 @@ import { Modal } from "react-bootstrap";
 export default function CardActivity() {
     const [modalDelete, setModalDelete] = useState(false)
     const [modalConfirm, setModalConfirm] = useState(false)
-    const { confirm } = Modal;
+    const [idItem, setId] = useState()
+    const [titleItem, setTitle] = useState()
     const dispatch = useDispatch()
     const { getActivityResult, getActivityLoading } = useSelector((state) => state.activityReducer);
 
@@ -17,12 +18,14 @@ export default function CardActivity() {
         dispatch(getAllActivity());
     }, [dispatch]);
 
-    const showModalDelete = () => {
+    const showModalDelete = (id, title) => {
         setModalDelete(true)
+        setId(id)
+        setTitle(title)
     }
 
-    const handleOkDelete = (id) => {
-        dispatch(deleteActivity(id));
+    const handleOkDelete = () => {
+        dispatch(deleteActivity(idItem));
         setModalDelete(false)
         setModalConfirm(true)
     }
@@ -46,7 +49,6 @@ export default function CardActivity() {
                     </div>
                 ): (
                     getActivityResult && getActivityResult.map((item) => (
-                        <>
                         <div className="col-3 mb-4" key={item.id}>
                             <Card data-cy="activity-item" loading={getActivityLoading}>
                                 <Link to={`/detail/${item.id}`}>
@@ -63,34 +65,31 @@ export default function CardActivity() {
                                 </div>
                             </Card>
                         </div>
-                        <div className="modal-delete">
-                                <Modal
-                                    data-cy="todo-modal-delete"
-                                    className="modal-delete"
-                                    show={modalDelete}
-                                    onHide={handleCancelDelete}
-                                    centered
-                                >
-                                    <Modal.Header>
-                                        <Modal.Title>
-                                            <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
-                                            <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{item.title}”?</b></p>
-                                        </Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Footer>
-                                        <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
-                                        <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
-                                    </Modal.Footer>
-                                </Modal>
-                            </div>
-                            </> 
                     )
                 ))}
-            {/* </Row> */}
+            </div>
+            <div className="modal-delete">
+                <Modal
+                    data-cy="todo-modal-delete"
+                    className="modal-delete"
+                    show={modalDelete}
+                    onHide={handleCancelDelete}
+                    centered
+                >
+                    <Modal.Header>
+                        <Modal.Title>
+                            <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
+                            <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{titleItem}”?</b></p>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
+                        <Button data-cy="modal-delete-confirm-button" onClick={handleOkDelete} type="danger">Hapus</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
             <div data-cy="modal-information">
                 <Modal
-                    data-cy="modal-infirmation"
                     className="modal-confirmation"
                     show={modalConfirm}
                     onHide={handleModalConfirm}

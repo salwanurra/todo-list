@@ -309,3 +309,7 @@ a {
 #custom-dropdown::after {
   display: none !important;
 }
+
+.priority-item {
+  left: 0 !important;
+}

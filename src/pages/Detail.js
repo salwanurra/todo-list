@@ -233,15 +233,19 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-item" className={`indicator ${priority}`}></div>;
+        return <div data-cy="modal-add-priority-dropdown" className="indicator-dropdown">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="black" strokeWidth={2} style={{width:'24px'}}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+        </div>;
     };
     const formatOptionLabel = ({ value, label }) => (
         <div
           data-cy="modal-add-priority-item"
           className="d-flex align-items-center"
         >
-        <div className={`indicator ${value}`}></div>
-          <div>{label}</div>
+            <div className={`indicator ${value} priority-item`}></div>
+            <div className="ms-3">{label}</div>
         </div>
       );
     
@@ -420,26 +424,23 @@ export default function Detail() {
                     <Modal.Body>
                         <Form.Group data-cy="form-add-todo-item">
                             <label data-cy="modal-add-name-title">NAMA LIST ITEM</label>
-                                <Form.Control
-                                    data-cy="modal-add-name-input"
-                                    placeholder="Tambahkan nama Activity"
-                                    name="title"
-                                    style={{ marginBottom: "16px" }}
-                                    onChange={e => setTitle(e.target.value)}
-                                />
+                            <Form.Control
+                                data-cy="modal-add-name-input"
+                                placeholder="Tambahkan nama Activity"
+                                name="title"
+                                style={{ marginBottom: "16px" }}
+                                onChange={e => setTitle(e.target.value)}
+                            />
                             <label data-cy="modal-add-priority-title">PRIORITY</label>
-                            <div data-cy="modal-add-priority-dropdown">
-                                <Select 
-                                    data-cy="modal-add-priority-dropdown" 
-                                    name="priority" 
-                                    className="select-priority"
-                                    options={options}
-                                    onChange={(e) => setPriority(e.value)} 
-                                    defaultValue={ options[0]}
-                                    components={{DropdownIndicator}}
-                                />
-
-                            </div>
+                            <Select 
+                                defaultValue={ options[0]}
+                                formatOptionLabel={formatOptionLabel}
+                                options={options}
+                                className="select-priority"
+                                name="priority" 
+                                onChange={(e) => setPriority(e.value)} 
+                                components={{DropdownIndicator}}
+                            />
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>

@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteActivity, getAllActivity } from "../store/actions/activity";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import { Modal } from "react-bootstrap";
 import ModalDelete from "./ModalDelete";
 
 export default function CardActivity() {
     const [modalDelete, setModalDelete] = useState(false)
-    const [modalConfirm, setModalConfirm] = useState(false)
     const [idDelete, setIdDelete] = useState()
     const [titleDelete, setTitleDelete] = useState()
     const dispatch = useDispatch()

@@ -326,7 +326,7 @@ export default function Detail() {
                                         <Button
                                             data-cy="todo-item-delete-button"
                                             onClick={() => showModalDelete(item)}
-                                            icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
+                                            icon={<img src="/activity-item-delete-button.svg" alt="delete" />} 
                                         />
                                     </div>
                                 </div>

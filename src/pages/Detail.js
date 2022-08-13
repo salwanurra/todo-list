@@ -67,7 +67,7 @@ export default function Detail() {
     const handleOkCreate = (idItem) => {
         dispatch(createToDo(title, priority, is_active, id, idItem))
         setIsModalCreate(false);
-        // window.location.reload()
+        window.location.reload()
     };
     
     console.log(priority)

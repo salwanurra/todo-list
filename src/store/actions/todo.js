@@ -20,7 +20,7 @@ export const getListToDo = ({id}) => {
                 }
             })
             const resListToDo = await axios.get(`https://todo.api.devcode.gethired.id/todo-items?activity_group_id=${id}`)
-            console.log(resListToDo)
+
             dispatch({
                 type: GETLIST_TODO_ITEM,
                 payload: {
@@ -31,7 +31,6 @@ export const getListToDo = ({id}) => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: GETLIST_TODO_ITEM,
                 payload: {
@@ -59,7 +58,7 @@ export const detailToDo = (id) => {
                 }
             })
             const resDetailToDo = await axios.get(`https://todo.api.devcode.gethired.id/todo-items/${id}`)
-            console.log(resDetailToDo)
+
             dispatch({
                 type: DETAIL_TODO_ITEM,
                 payload: {
@@ -70,7 +69,6 @@ export const detailToDo = (id) => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: DETAIL_TODO_ITEM,
                 payload: {
@@ -114,7 +112,6 @@ export const createToDo = (title, priority, is_active, id) => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: CREATE_TODO_ITEM,
                 payload: {
@@ -132,7 +129,6 @@ export const deleteToDo = (id) => {
     return async(dispatch) => {
         try {
             // loading
-            console.log(id)
             dispatch({
                 type: DELETE_TODO_ITEM,
                 payload: {
@@ -169,14 +165,7 @@ export const deleteToDo = (id) => {
 export const updateToDo = ({id, data}) => {
     return async(dispatch) => {
         try {
-            // loading
-            // const input = {
-            //     title: title,
-            //     priority: priority,
-            //     is_active: is_active
-            // }
-            console.log(id)
-            console.log(data)
+
             dispatch({
                 type: UPDATE_TODO_ITEM,
                 payload: {
@@ -197,7 +186,6 @@ export const updateToDo = ({id, data}) => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: UPDATE_TODO_ITEM,
                 payload: {

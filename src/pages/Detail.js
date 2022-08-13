@@ -38,7 +38,6 @@ export default function Detail() {
         setIdDelete(idDeleteItem)
         setTitleDelete(titleDeleteItem)
         setIsModalDelete(true)
-        console.log(idDeleteItem)
     }
 
     const handleOkDelete = () => {
@@ -68,7 +67,7 @@ export default function Detail() {
     const handleOkCreate = (idItem) => {
         dispatch(createToDo(title, priority, is_active, id, idItem))
         setIsModalCreate(false);
-        window.location.reload()
+        // window.location.reload()
     };
 
     const handleCancelCreate = () => {
@@ -121,7 +120,7 @@ export default function Detail() {
     const [titleEdit, setTitleEdit] = useState();
     const [priorityEdit, setPriorityEdit] = useState();
     const [selectOption, setSelectOption] = useState();
-
+    console.log(selectOption)
     const showModalUpdate = (item) => {
         setIdEdit(item.id)
         setIsModalUpdate(true)
@@ -129,8 +128,7 @@ export default function Detail() {
         setPriorityEdit(item.priority)
         setSelectOption(options.find(option => option.value===item.priority))
     };
-    
-    console.log(idEdit)
+
     let data = {title: titleEdit, is_active:is_active, priority: priorityEdit}
 
     const handleOkEdit = async (id) => {
@@ -185,7 +183,7 @@ export default function Detail() {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
         } else if (`${key}` === '2') {
-            let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
+            let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['asc']);
             setItemToDo(sortItem)
         } else if (`${key}` === '3') {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
@@ -436,7 +434,7 @@ export default function Detail() {
                                     className="select-priority"
                                     options={options}
                                     onChange={(e) => setPriority(e.value)} 
-                                    defaultValue={options[0]}
+                                    defaultValue={ options.find(e => e.value === priority ?? 'very-high')}
                                     components={{DropdownIndicator}}
                                 />
 

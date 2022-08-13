@@ -58,7 +58,7 @@ export const getDetailActivity = ({id}) => {
                 }
             })
             const resGetActivity = await axios.get(`https://todo.api.devcode.gethired.id/activity-groups/${id}`)
-            console.log(resGetActivity)
+
             dispatch({
                 type: GET_DETAIL_ACTIVITY,
                 payload: {
@@ -86,7 +86,6 @@ export const deleteActivity = (id) => {
     return async(dispatch) => {
         try {
             // loading
-            console.log(id)
             dispatch({
                 type: DELETE_ACTIVITY,
                 payload: {
@@ -97,7 +96,7 @@ export const deleteActivity = (id) => {
                 }
             })
             const resDeleteActivity = await axios.delete(`https://todo.api.devcode.gethired.id/activity-groups/${id}`)
-            console.log(resDeleteActivity)
+
             dispatch({
                 type: DELETE_ACTIVITY,
                 payload: {
@@ -149,7 +148,6 @@ export const createActivity = () => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: CREATE_ACTIVITY,
                 payload: {
@@ -168,8 +166,6 @@ export const updateActivity = ({id, title}) => {
     return async(dispatch) => {
         try {
             // loading
-            console.log(id)
-            console.log(title)
             dispatch({
                 type: UPDATE_ACTIVITY,
                 payload: {
@@ -194,7 +190,6 @@ export const updateActivity = ({id, title}) => {
                 }
             })
         } catch (error){
-            console.log(error)
             dispatch({
                 type: UPDATE_ACTIVITY,
                 payload: {

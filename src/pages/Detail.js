@@ -371,7 +371,7 @@ export default function Detail() {
                                 {/* MODAL DELETE*/}
                                 <div className="modal-delete" data-cy="todo-item-delete-button">
                                     <Modal
-                                        data-cy="modal-delete"
+                                        data-cy="modal-delete-confirm-button"
                                         className="modal-delete"
                                         show={isModalDelete}
                                         onHide={handleCancelDelete}

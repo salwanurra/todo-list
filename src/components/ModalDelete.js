@@ -27,7 +27,6 @@ export default function ModalDelete({show, handleDelete, idDelete, titleDelete, 
     <> 
         <div className="modal-delete" data-cy="modal-delete">
             <Modal
-                data-cy="modal-delete"
                 className="modal-delete"
                 show={show}
                 onHide={handleClose}

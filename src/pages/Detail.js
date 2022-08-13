@@ -67,7 +67,7 @@ export default function Detail() {
     const handleOkCreate = (idItem) => {
         dispatch(createToDo(title, priority, is_active, id, idItem))
         setIsModalCreate(false);
-        // window.location.reload()
+        window.location.reload()
     };
 
     const handleCancelCreate = () => {
@@ -369,9 +369,9 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="modal-delete">
+                                <div className="modal-delete" data-cy="todo-item-delete-button">
                                     <Modal
-                                        data-cy="todo-modal-delete"
+                                        data-cy="modal-delete"
                                         className="modal-delete"
                                         show={isModalDelete}
                                         onHide={handleCancelDelete}
@@ -434,7 +434,7 @@ export default function Detail() {
                                     className="select-priority"
                                     options={options}
                                     onChange={(e) => setPriority(e.value)} 
-                                    defaultValue={ options.find(e => e.value === priority ?? 'very-high')}
+                                    defaultValue={ options[0]}
                                     components={{DropdownIndicator}}
                                 />
 

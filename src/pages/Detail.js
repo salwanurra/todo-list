@@ -1,8 +1,8 @@
 import _ from "lodash"
 import { ConsoleSqlOutlined, PlusOutlined } from "@ant-design/icons";
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, Dropdown } from "react-bootstrap";
 import Select from "react-select";
-import { Button, Checkbox, Dropdown, Input, Menu, Space } from "antd";
+import { Button, Checkbox, Input, Menu, Space } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
@@ -69,8 +69,7 @@ export default function Detail() {
         setIsModalCreate(false);
         window.location.reload()
     };
-    
-    console.log(priority)
+
     const handleCancelCreate = () => {
         setIsModalCreate(false);
     };
@@ -121,7 +120,7 @@ export default function Detail() {
     const [titleEdit, setTitleEdit] = useState();
     const [priorityEdit, setPriorityEdit] = useState();
     const [selectOption, setSelectOption] = useState();
-    console.log(selectOption)
+
     const showModalUpdate = (item) => {
         setIdEdit(item.id)
         setIsModalUpdate(true)
@@ -172,6 +171,7 @@ export default function Detail() {
     }
 
     // SORT TO DO ITEM
+    const [activeDropdown, setActiveDropdown] = useState(1);
     useEffect(() => {
         if (getDetailResult) {
             let sortToDo = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
@@ -179,59 +179,32 @@ export default function Detail() {
         }
     }, [getDetailResult])
 
-    const sortToDo = ({key}) => {
-        if (`${key}` === '1') {
+    useEffect(() => {
+        if (activeDropdown === 1) {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['desc']);
             setItemToDo(sortItem)
-        } else if (`${key}` === '2') {
-            let sortItem = _.orderBy(getDetailResult.todo_items, 'id', ['asc']);
+        } else if (activeDropdown === 2) {
+            let sortItem = _.sortBy(getDetailResult.todo_items, 'id');
             setItemToDo(sortItem)
-        } else if (`${key}` === '3') {
+        } else if (activeDropdown === 3) {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'title');
             setItemToDo(sortItem)
-        } else if (`${key}` === '4') {
+        } else if (activeDropdown === 4) {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'title',['desc']);
             setItemToDo(sortItem)
-        } else if (`${key}` === '5') {
+        } else if (activeDropdown === 5) {
             let sortItem = _.orderBy(getDetailResult.todo_items, 'is_active', ['desc']);
             setItemToDo(sortItem)
         } else {
             let sortItem = _.sortBy(getDetailResult.todo_items, 'id');
             setItemToDo(sortItem)
         }
-    }
-
-    const menuSort = (
-        <Menu selectable defaultSelectedKeys={'1'} onClick={sortToDo}  data-cy="sort-selection"
-            items={[
-                {
-                    key: '1',
-                    label: 'Terbaru',
-                    icon: <img src="/sort-latest.svg" alt="latest" data-cy="sort-selection" />
-                },
-                {
-                    key: '2',
-                    label: 'Terlama',
-                    icon: <img src="/sort-oldest.svg" alt="latest" data-cy="sort-selection" />
-                },
-                {
-                    key: '3',
-                    label: 'A-Z',
-                    icon: <img src="/sort-az.svg" alt="latest" data-cy="sort-selection" />
-                },
-                {
-                    key: '4',
-                    label: 'Z-A',
-                    icon: <img src="/sort-za.svg" alt="latest" data-cy="sort-selection" />
-                },
-                {
-                    key: '5',
-                    label:'Belum Selesai',
-                    icon: <img src="/sort-unfinished.svg" alt="latest" data-cy="sort-selection" />
-                },
-            ]} 
-        />
-    )
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeDropdown])
+    
+    console.log(itemToDo)
+   
     const DropdownIndicator = () => {
         return <div data-cy="modal-add-priority-dropdown" className="indicator-dropdown">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="black" strokeWidth={2} style={{width:'24px'}}>
@@ -280,10 +253,57 @@ export default function Detail() {
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
                         <div data-cy="todo-sort-button">
-                            <Dropdown overlay={menuSort} trigger={"click"} data-cy="sort-selection">
-                                <Space>
-                                    <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="sort-selection"/>
-                                </Space>
+                            <Dropdown>
+                                <Dropdown.Toggle id="custom-dropdown">
+                                    <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                <Dropdown.Item eventKey="1" data-cy="sort-selection">
+                                    <div 
+                                        onClick={() => setActiveDropdown(1)} 
+                                        data-cy={activeDropdown === 1 && "sort-selection-selected"}
+                                    >
+                                        <img src="/sort-latest.svg" data-cy="sort-selection-icon" alt="latest" />
+                                        <span data-cy="sort-selection-title">Terbaru</span>
+                                    </div>
+                                </Dropdown.Item>
+                                <Dropdown.Item eventKey="2" data-cy="sort-selection">
+                                    <div 
+                                        onClick={() => setActiveDropdown(2)} 
+                                        data-cy={activeDropdown === 2 && "sort-selection-selected"}
+                                    >
+                                        <img src="/sort-oldest.svg" data-cy="sort-selection-icon" alt="latest" />
+                                        <span data-cy="sort-selection-title">Terlama</span>
+                                    </div>
+                                </Dropdown.Item>
+                                <Dropdown.Item eventKey="3" data-cy="sort-selection">
+                                    <div 
+                                        onClick={() => setActiveDropdown(3)} 
+                                        data-cy={activeDropdown === 3 && "sort-selection-selected"}
+                                    >
+                                        <img src="/sort-az.svg" data-cy="sort-selection-icon" alt="latest" />
+                                        <span data-cy="sort-selection-title">A-Z</span>
+                                    </div>
+                                </Dropdown.Item>
+                                <Dropdown.Item eventKey="4" data-cy="sort-selection">
+                                    <div 
+                                        onClick={() => setActiveDropdown(4)} 
+                                        data-cy={activeDropdown === 4 && "sort-selection-selected"}
+                                    >
+                                        <img src="/sort-za.svg" data-cy="sort-selection-icon" alt="latest" />
+                                        <span data-cy="sort-selection-title">Z-A</span>
+                                    </div>
+                                </Dropdown.Item>
+                                <Dropdown.Item eventKey="5" data-cy="sort-selection">
+                                    <div 
+                                        onClick={() => setActiveDropdown(5)} 
+                                        data-cy={activeDropdown === 5 && "sort-selection-selected"}
+                                    >
+                                        <img src="/sort-unfinished.svg" data-cy="sort-selection-icon" alt="latest" />
+                                        <span data-cy="sort-selection-title">Belum Selesai</span>
+                                    </div>
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
                             </Dropdown>
 
                         </div>

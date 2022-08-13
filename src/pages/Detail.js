@@ -1,23 +1,21 @@
 import _ from "lodash"
-import { ConsoleSqlOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Form, Dropdown } from "react-bootstrap";
 import Select from "react-select";
-import { Button, Checkbox, Input, Menu, Space } from "antd";
+import { Button, Checkbox, Input, } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
 import Header from "../components/Header";
 import { getDetailActivity, updateActivity } from "../store/actions/activity";
-import { createToDo, deleteToDo, updateToDo } from "../store/actions/todo";
+import { createToDo,  updateToDo } from "../store/actions/todo";
+import ModalDelete from "../components/ModalDelete";
 
 export default function Detail() {
-    // const { Option } = Select;
     const inputRef = useRef()
-    // const [form] = Form.useForm()
     const [isModalCreate, setIsModalCreate] = useState(false);
     const [isModalUpdate, setIsModalUpdate] = useState(false);
     const dispatch = useDispatch()
-    const { confirm } = Modal;
     const { id } = useParams()
     const { getDetailResult} = useSelector((state) => state.activityReducer);
     const [itemToDo, setItemToDo] = useState([])
@@ -30,29 +28,13 @@ export default function Detail() {
 
     // DELETE ACTIVITY
     const [isModalDelete, setIsModalDelete] = useState(false);
-    const [modalConfirm, setModalConfirm] = useState(false)
     const [idDelete, setIdDelete] = useState()
     const [titleDelete, setTitleDelete] = useState()
 
-    const showModalDelete = (idDeleteItem, titleDeleteItem) => {
-        setIdDelete(idDeleteItem)
-        setTitleDelete(titleDeleteItem)
+    const showModalDelete = (deleteItem) => {
+        setIdDelete(deleteItem.id)
+        setTitleDelete(deleteItem.title)
         setIsModalDelete(true)
-    }
-
-    const handleOkDelete = () => {
-        dispatch(deleteToDo(idDelete));
-        setIsModalDelete(false)
-        setModalConfirm(true)
-    }
-
-    const handleCancelDelete = () => {
-        setIsModalDelete(false)
-    }
-
-    const handleModalConfirm = () => {
-        setModalConfirm(false)
-        window.location.reload()
     }
 
     // CREATE NEW ACTIVITY
@@ -202,8 +184,6 @@ export default function Detail() {
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeDropdown])
-    
-    console.log(itemToDo)
    
     const DropdownIndicator = () => {
         return <div data-cy="modal-add-priority-dropdown" className="indicator-dropdown">
@@ -345,7 +325,7 @@ export default function Detail() {
                                     <div>
                                         <Button
                                             data-cy="todo-item-delete-button"
-                                            onClick={() => showModalDelete(item.id, item.title)}
+                                            onClick={() => showModalDelete(item)}
                                             icon={<img src="/activity-item-delete-button.svg" alt="delete" data-cy="todo-item-delete-button" />} 
                                         />
                                     </div>
@@ -394,42 +374,7 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="modal-delete">
-                                    <Modal
-                                        data-cy="modal-delete-confirm-button"
-                                        className="modal-delete"
-                                        show={isModalDelete}
-                                        onHide={handleCancelDelete}
-                                        centered
-                                    >
-                                        <Modal.Header>
-                                            <Modal.Title>
-                                                <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
-                                                <p data-cy="modal-delete-title">Apakah anda yakin menghapus item <b>“{titleDelete}”?</b></p>
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Footer>
-                                            <Button data-cy="modal-delete-cancel-button" onClick={handleCancelDelete} type="default">Batal</Button>
-                                            <Button data-cy="modal-delete-confirm-button" onClick={() => handleOkDelete(item.id)} type="danger">Hapus</Button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
-                                <div data-cy="modal-information">
-                                    <Modal
-                                        data-cy="modal-information"
-                                        className="modal-confirmation"
-                                        show={modalConfirm}
-                                        onHide={handleModalConfirm}
-                                        centered
-                                    >
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>
-                                                <img data-cy="modal-information-icon" src="/modal-information-icon.svg" alt="information" />
-                                                <h5 data-cy="modal-information-title">Activity berhasil dihapus</h5>
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                    </Modal>
-                                </div>
+                                <ModalDelete show={isModalDelete} idDelete={idDelete} titleDelete={titleDelete} handleClose={() => setIsModalDelete(false)} />
                             </>
                         ))
                     )}

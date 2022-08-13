@@ -369,7 +369,7 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="todo-modal-delete">
+                                <div className="modal-delete" data-cy="modal-delete">
                                     <Modal
                                         data-cy="todo-modal-delete"
                                         className="modal-delete"

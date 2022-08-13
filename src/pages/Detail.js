@@ -67,9 +67,10 @@ export default function Detail() {
     const handleOkCreate = (idItem) => {
         dispatch(createToDo(title, priority, is_active, id, idItem))
         setIsModalCreate(false);
-        window.location.reload()
+        // window.location.reload()
     };
-
+    
+    console.log(priority)
     const handleCancelCreate = () => {
         setIsModalCreate(false);
     };
@@ -232,7 +233,7 @@ export default function Detail() {
         />
     )
     const DropdownIndicator = () => {
-        return <div data-cy="modal-add-priority-item" className="priority-dropdown"></div>;
+        return <div data-cy="modal-add-priority-item" className={`indicator ${priority}`}></div>;
     };
     const formatOptionLabel = ({ value, label }) => (
         <div
@@ -329,7 +330,7 @@ export default function Detail() {
                                 {/* MODAL UPDATE EDIT TO DO ITEM */}
                                 <Modal data-cy="modal-edit-todo-item" show={isModalUpdate} onHide={() => handleCancelEdit(item)} centered>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Tambah List Item</Modal.Title>
+                                        <Modal.Title>Edit List Item</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <Form.Group   
@@ -350,7 +351,7 @@ export default function Detail() {
                                             <label>PRIORITY</label>
                                             <div data-cy="modal-add-priority-dropdown">
                                                 <Select 
-                                                    data-cy="modal-add-priority-dropdown" 
+                                                    data-cy="modal-add-priority-item" 
                                                     name="priority" 
                                                     options={options}
                                                     onChange={(e) => setPriorityEdit(e.value)} 
@@ -369,7 +370,7 @@ export default function Detail() {
                                 </Modal> 
 
                                 {/* MODAL DELETE*/}
-                                <div className="modal-delete" data-cy="todo-item-delete-button">
+                                <div className="modal-delete" data-cy="modal-delete">
                                     <Modal
                                         data-cy="modal-delete-confirm-button"
                                         className="modal-delete"

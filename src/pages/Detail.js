@@ -252,7 +252,7 @@ export default function Detail() {
                     </div>
                     <div className="d-flex flex-row align-items-center">
                         {/* BUTTON SORT TO DO ITEM */}
-                        <div data-cy="todo-sort-button">
+                        
                             <Dropdown>
                                 <Dropdown.Toggle id="custom-dropdown">
                                     <img className="btn-sort" src="/todo-sort-button.svg" alt="sort" data-cy="todo-sort-button"/>
@@ -306,7 +306,7 @@ export default function Detail() {
                             </Dropdown.Menu>
                             </Dropdown>
 
-                        </div>
+
                         {/* BUTTON CREATE TO DO ITEM */}
                         <Button className="btn btn-lightblue" size="large" shape="round" onClick={showModalCreate} icon={<PlusOutlined />} data-cy="todo-add-button">
                             Tambah

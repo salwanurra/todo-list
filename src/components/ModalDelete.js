@@ -36,14 +36,15 @@ export default function ModalDelete({show, handleDelete, idDelete, titleDelete, 
                 <Modal.Header>
                     <Modal.Title>
                         <img data-cy="modal-delete-icon" src="/modal-delete-icon.svg" alt="delete" />
-                        <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{titleDelete}”?</b></p>
+                        {/* <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{titleDelete}”?</b></p> */}
                     </Modal.Title>
                 </Modal.Header>
+                <Modal.Body>
+                    <p data-cy="modal-delete-title">Apakah anda yakin menghapus activity <b>“{titleDelete}”?</b></p>
+                </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleClose} type="default">Batal</Button>
-                    <div data-cy="modal-delete-confirm-button">
-                    <button onClick={handleOkDelete} className="btn-danger">Hapus</button>
-                    </div>
+                    <Button data-cy="modal-delete-cancel-button" onClick={handleClose} type="default">Batal</Button>
+                    <button data-cy="modal-delete-confirm-button" onClick={handleOkDelete} className="btn-danger">Hapus</button>
                 </Modal.Footer>
             </Modal>
         </div>

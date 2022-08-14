@@ -25,9 +25,8 @@ export default function ModalDelete({show, handleDelete, idDelete, titleDelete, 
 
     return (
     <> 
-        <div>
+        <div data-cy="modal-delete">
             <Modal
-                data-cy="modal-delete"
                 className="modal-delete"
                 show={show}
                 onHide={handleClose}
@@ -48,9 +47,8 @@ export default function ModalDelete({show, handleDelete, idDelete, titleDelete, 
                 </Modal.Footer>
             </Modal>
         </div>
-        <div>
+        <div data-cy="modal-information">
             <Modal
-                data-cy="modal-information"
                 className="modal-confirmation"
                 show={modalConfirm}
                 onHide={handleModalConfirm}

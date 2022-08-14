@@ -373,8 +373,7 @@ export default function Detail() {
                                     </Modal.Footer>
                                 </Modal> 
 
-                                {/* MODAL DELETE*/}
-                                <ModalDelete show={isModalDelete} idDelete={idDelete} titleDelete={titleDelete} handleClose={() => setIsModalDelete(false)} />
+                               
                             </>
                         ))
                     )}
@@ -415,6 +414,9 @@ export default function Detail() {
                     </Modal.Footer>
                 </Modal>
             </div>
+            
+             {/* MODAL DELETE*/}
+             <ModalDelete show={isModalDelete} idDelete={idDelete} titleDelete={titleDelete} handleClose={() => setIsModalDelete(false)} />
         </div>
     )
 }

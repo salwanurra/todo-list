@@ -40,12 +40,14 @@ export default function ModalDelete({show, handleDelete, idDelete, titleDelete, 
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
-                    <Button data-cy="modal-delete-cancel-button" onClick={handleClose} type="default">Batal</Button>
-                    <Button data-cy="modal-delete-confirm-button" onClick={handleOkDelete} type="danger">Hapus</Button>
+                    <Button onClick={handleClose} type="default">Batal</Button>
+                    <div data-cy="modal-delete-confirm-button">
+                    <button onClick={handleOkDelete} className="btn-danger">Hapus</button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         </div>
-        <div data-cy="modal-information">
+        <div>
             <Modal
                 data-cy="modal-information"
                 className="modal-confirmation"
